@@ -140,3 +140,17 @@ def extract_patches(arr, patch_shape, step=1):
     padded = np.pad(padded, ((0, 0), (0, 0), (patch_shape[2] // 2, patch_shape[2] // 2)), 'wrap')
     patches = view_as_windows(padded, patch_shape, step)
     return patches
+
+
+def write_h5(fn, **kwargs):
+    """Writes an h5 file with data specified by kwargs.
+
+    Parameters
+    ----------
+    fn: str
+        file path to write
+    **kwargs
+    """
+    with h5py.File(fn, 'w') as f:
+        for key, value in kwargs.items():
+            f.create_dataset(key, data=value)

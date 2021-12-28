@@ -3,8 +3,6 @@ import bottleneck as bn
 import pandas
 from skimage import measure, morphology
 
-from ttools import utils, config
-
 
 def estimate_background(tec, patch_shape):
     """Use a moving average filter to estimate the background TEC value. `patch_shape` must contain odd numbers
@@ -205,23 +203,6 @@ def run_multiple(args, parallel=True):
             results.append(run_single(*arg))
     return np.stack(results, axis=0)
 
-
-PARAM_SAMPLING = {
-    'tv_weight': stats.uniform(0, 1),
-    'l2_weight': stats.uniform(0, 1),
-    'bge_x_rad': stats.randint(6, 11),
-    'bge_y_rad': stats.randint(6, 11),
-    'bge_temporal_rad': stats.randint(0, 2),
-    'rbf_bw': stats.randint(1, 3),
-    'tv_hw': stats.randint(1, 4),
-    'tv_vw': stats.randint(1, 4),
-    'model_weight_max': stats.randint(1, 30),
-    'perimeter_th': stats.randint(10, 100),
-    'area_th': stats.randint(10, 100),
-    'prior_order': [1, 2],
-    'prior': ['empirical_model', 'auroral_boundary'],
-    'prior_offset': stats.randint(-5, 1),
-}
 
 BG_EST_SHAPE = (1, 19, 17)
 MODEL_WEIGHT_MAX = 15
